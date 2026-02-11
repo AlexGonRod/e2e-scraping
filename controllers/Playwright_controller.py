@@ -1,5 +1,5 @@
-from playwright.sync_api import Page
 import time
+from playwright.sync_api import Page
 
 class PlaywrightController:
 
@@ -34,7 +34,7 @@ class PlaywrightController:
 
         except Exception as e:
             print(f"Error rellenando formulario: {e}")
-            return None
+            raise
 
     def extract_data(self, selector, attribute=None):
         elements = self.page.query_selector_all(selector)
