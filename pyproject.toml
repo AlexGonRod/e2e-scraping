@@ -13,5 +13,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "playwright==1.57.0",
     "pylint>=4.0.4",
+    "requests==2.32.5",
 ]
