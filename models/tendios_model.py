@@ -41,5 +41,5 @@ def tendios_model(cpvs_codes: List[str], url: str = url, status: List[str] = sta
     response = requests.post(f'{api_url}/api/searcher-tender', headers=headers, json=payload)
     if response.status_code != 200:
         raise RuntimeError(f"Error en la llamada a la API: {response.status_code}")
-    
+
     return response.json()
