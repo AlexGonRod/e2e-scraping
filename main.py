@@ -82,12 +82,9 @@ def main() -> None:
     else:
         tendios_data.fetch()
 
-
-
-    # model = MailTrapModel()
-    # controller = MailController(model)
-    # mail_response = controller.send_mail()
-    # print(mail_response)
+    mail_model = MailTrapModel()
+    mail_controller = MailController(mail_model)
+    mail_controller.send_mail()
 
 
 if __name__ == "__main__":

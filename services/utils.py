@@ -1,5 +1,6 @@
 import json
 import functools
+from datetime import datetime
 
 def save_data_to_json(fn):
 
@@ -13,3 +14,11 @@ def save_data_to_json(fn):
         print(f"Datos guardados en {filename}")
         return data
     return wrapper
+
+def format_date(date_str: str) -> str:
+    try:
+        date_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+        return date_obj.strftime("%d/%m/%Y")
+    except ValueError as e:
+        print(f"Error parsing date: {e}")
+        return date_str

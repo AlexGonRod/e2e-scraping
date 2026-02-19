@@ -2,24 +2,26 @@ import os
 import mailtrap as mt
 from dotenv import load_dotenv
 from models import MailData
+from services import format_date
 
 mail_options = MailData(
     sender = "alexgonrod83@gmail.com",
     to = "alexgonrod83@gmail.com",
     options = {
-        "name": "Rocío",
-        "status": "Publicada",
+        "expedient": "GA08-26",
         "budgetNoTaxes": "100.000€",
-        "expedientPublishedAt": "2024-06-01",
+        "expedientPublishedAt": "2026-02-16T23:00:00.000Z",
+        "expedientSubmissionDeadline": "2026-02-24T13:00:00.000Z",
         "contractingOrganization": {
-            "name": "Ayuntamiento de Madrid"
-            }
+            "id": "6332f339015d7b5bc6170580",
+            "name": "Forestal Catalana, SA"
+        },
         }
 )
 
 def get_client() -> mt.MailtrapClient:
     try:
-        client = mt.MailtrapClient(token="5a43db29099bfa922d7db24cca664023")
+        client = mt.MailtrapClient(token="5a43db29099bfa922d7db24cca664023", sandbox=True, inbox_id="4365787")
         return client
     except Exception as e:
         print(f"Error creating Mailtrap client: {e}")
@@ -39,11 +41,11 @@ class MailTrapModel():
             to=[mt.Address(email="alexgonrod83@gmail.com")],
             template_uuid = os.getenv("MAIL_TEMPLATE_ID") or "",
             template_variables={
-                "name": mail_options.sender or "Rocio",
-                # "status": mail_data.options.status,
-                # "budgetNoTaxes": mail_data.options.budgetNoTaxes,
-                # "expedientPublishedAt": mail_data.options.expedientPublishedAt,
-                # "contractingOrganization": mail_data.options.contractingOrganization.name,
+                "expedient": mail_options.options.get("expedient", ""),
+                "dateAt": format_date(mail_options.options.get("expedientPublishedAt", "")),
+                "dateTo": format_date(mail_options.options.get("expedientSubmissionDeadline", "")),
+                "budget": mail_options.options.get("budgetNoTaxes", ""),
+                "id": mail_options.options.get("contractingOrganization", {}).get("name", ""),
             }
         )
 
