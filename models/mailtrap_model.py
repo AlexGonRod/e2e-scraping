@@ -66,12 +66,12 @@ class MailTrapModel():
         self._inbox_id = os.getenv("MAIL_INBOX_ID") or ""
         self._account_id = os.getenv("MAIL_ACCOUNT_ID")
         self._template_id = os.getenv("MAIL_TEMPLATE_ID") or ""
+        self.client = get_client(self._token, self._inbox_id)
 
     def send(self) -> mt.SEND_ENDPOINT_RESPONSE:
         try:
-            client = get_client(self._token, self._inbox_id)
             template = set_email()
-            email = client.send(template)
+            email = self.client.send(template)
             return email
 
         except Exception as e:

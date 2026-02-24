@@ -48,14 +48,21 @@ class ScrapeWithForm():
             self.exporter.save()
 
 class FetchData():
-    def __init__(self, controller):
+    def __init__(self, controller: ScraperController) -> None:
         self.controller = controller
         self.filename = FILENAME
 
     @save_data_to_json
-    def fetch(self) -> None:
+    def fetch(self) -> dict:
         print("=== Llamada a API ===")
         return self.controller.scrape()
+
+class SendMail():
+    def __init__(self,controller: MailController) -> None:
+        self.controller = controller
+
+    def send(self) -> dict:
+        return self.controller.send()
 
 def main() -> None:
     scraper_model = TendiosModel()
@@ -74,7 +81,7 @@ def main() -> None:
 
     mail_model = MailTrapModel()
     mail_controller = MailController(mail_model)
-    mail_controller.send_mail()
+    SendMail(mail_controller).send()
 
 
 if __name__ == "__main__":

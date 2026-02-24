@@ -4,5 +4,5 @@ class MailController():
     def __init__(self, model: MailModel) -> None:
         self.model = model
 
-    def send_mail(self):
+    def send(self):
         return self.model.send()

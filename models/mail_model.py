@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class MailData(BaseModel):
     sender: str = ""
     to: str = ""
+    subject: str = ""
     body: Optional[str] = ""
     options: dict[str,Any] = {}
 
