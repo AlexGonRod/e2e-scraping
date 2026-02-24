@@ -10,19 +10,20 @@ mail_options = MailData(
     to = "alexgonrod83@gmail.com",
     options = {
       "id": "019c7b3b-d2cf-73ee-be27-1d184fbce10f",
-      "expedient": "2025_0169",
-      "name": "Alojamiento y manutención de animales que exceden la capacidad del centro municipal de protección animal",
-      "budgetNoTaxes": 58400,
-      "status": "Publicada",
-      "location": "Murcia, Área Metropolitana de Murcia, Región de Murcia, España",
-      "contractingOrganization": {
-        "id": "632f4d5290a1f608455391c7",
-        "name": "Junta de Gobierno del Ayuntamiento de Murcia"
-      },
-      "numLots": 0,
-      "expedientPublishedAt": "2026-02-20T13:23:57.000Z",
-      "expedientSubmissionDeadline": "2026-03-06T22:59:00.000Z"
+    "expedient": "2025_0169",
+    "name": "Alojamiento y manutención de animales que exceden la capacidad del centro municipal de protección animal",
+    "budgetNoTaxes": 58400,
+    "status": "Publicada",
+    "location": "Murcia, Área Metropolitana de Murcia, Región de Murcia, España",
+    "contractingOrganization": {
+      "id": "632f4d5290a1f608455391c7",
+      "name": "Junta de Gobierno del Ayuntamiento de Murcia"
     },
+    "numLots": 0,
+    "expedientPublishedAt": "2026-02-20T13:23:57.000Z",
+    "expedientSubmissionDeadline": "2026-03-06T22:59:00.000Z",
+    "linkUrl": "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=DbwWvEIhw74UqXM96WStVA%3D%3D"
+  },
 )
 
 def get_client(token, inbox_id) -> mt.MailtrapClient:

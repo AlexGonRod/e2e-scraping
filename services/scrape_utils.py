@@ -1,4 +1,5 @@
 import time
+import requests
 
 def fill_form(self, url, form_selectors):
     try:
@@ -107,3 +108,14 @@ def extract_table(self, table_selector="table"):
         print(f"Error extrayendo tabla: {e}")
         return []
 
+def get_deeplink(id, headers) -> dict:
+    try:
+        deeplink = f"https://api-rest.tendios.com/api/tenders/{id}/sources"
+        response = requests.get(deeplink, headers=headers, timeout=10).json()
+        if not response or not isinstance(response, list) or 'linkUrl' not in response[0]:
+            raise RuntimeError(f"Respuesta inesperada al obtener deeplink: {response}")
+
+        return response[0]['linkUrl']
+    except Exception as e:
+        print(f"Error obteniendo deeplink: {e}")
+        raise RuntimeError("Error obteniendo deeplink") from e
