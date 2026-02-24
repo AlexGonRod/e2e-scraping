@@ -3,7 +3,6 @@ import functools
 from datetime import datetime
 
 def save_data_to_json(fn):
-
     @functools.wraps(fn)
     def wrapper(self, *args, **kwargs) -> None:
         data = fn(self,*args, **kwargs)

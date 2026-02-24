@@ -1,5 +1,5 @@
 from playwright.sync_api import Page
-from services import (fill_form, extract_data, extract_table)
+from services import fill_form, extract_data, extract_table
 
 class PlaywrightController:
 
