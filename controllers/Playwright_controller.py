@@ -13,9 +13,7 @@ class PlaywrightController:
         return extract_data(self, selector, attribute)
 
     def extract_table(self, table_selector="table"):
-        """Extrae datos de una tabla HTML"""
         return extract_table(self, table_selector)
 
     def get_all_text(self):
-        """Obtiene todo el texto visible de la página"""
         return self.page.evaluate("() => document.body.innerText")
