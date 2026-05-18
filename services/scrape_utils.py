@@ -1,4 +1,5 @@
 import time
+import httpx
 import requests
 
 def fill_form(self, url, form_selectors):
@@ -58,8 +59,14 @@ def extract_table(self, table_selector="table"):
 
                 const parseNumber = (text) => {{
                     if (!text) return null;
-                    // Clean numeric string for Spanish/European format
-                    const cleaned = text.replace(/[^\\d.,-]/g, '').replace('.', '').replace(',', '.');
+                    let cleaned = text.replace(/[^\\d.,-]/g, '');
+                    const dots = (cleaned.match(/\\./g) || []).length;
+                    const commas = (cleaned.match(/,/g) || []).length;
+                    if (dots > 1 || (dots === 1 && commas > 0)) {{
+                        cleaned = cleaned.replace(/\\./g, '').replace(',', '.');
+                    }} else if (commas > 0) {{
+                        cleaned = cleaned.replace(',', '.');
+                    }}
                     const num = parseFloat(cleaned);
                     return isNaN(num) ? null : num;
                 }};
@@ -69,14 +76,8 @@ def extract_table(self, table_selector="table"):
                     if (cells.length < 1) return null;
 
                     const firstCell = cells[0];
-
-                    // 1. Extract Expedient: Search for the span that contains 'textoEnlace' in its ID
                     const expedient = firstCell.querySelector('span[id*="textoEnlace"]')?.innerText.trim() || "";
-
-                    // 2. Extract Name: The second div in that first cell
                     const name = firstCell.querySelector('div:nth-child(2)')?.innerText.trim() || "";
-
-                    // 3. Extract ID: (Fixed comments to // and fixed escaping)
                     const anchor = firstCell.querySelector('a');
                     const onClickText = anchor ? anchor.getAttribute('onclick') : "";
                     const idMatch = onClickText ? onClickText.match(/'idLicitacion','(\\d+)'/) : null;
@@ -89,13 +90,13 @@ def extract_table(self, table_selector="table"):
                         "budgetNoTaxes": parseNumber(cells[3]?.innerText) || 0,
                         "awardAmount": null,
                         "status": cells[2]?.innerText.trim() || "",
-                        "location": cells[5]?.innerText.trim() || "",
+                        "location": cells[1]?.innerText.trim() || "",
                         "contractingOrganization": {{
                             "id": "",
-                            "name": cells[4]?.innerText.trim() || ""
+                            "name": cells[5]?.innerText.trim() || ""
                         }},
                         "numLots": 0,
-                        "expedientPublishedAt": cells[2]?.innerText.trim() || "",
+                        "expedientPublishedAt": cells[4]?.innerText.trim() || "",
                         "expedientSubmissionDeadline": ""
                     }};
                 }}).filter(item => item !== null);
@@ -112,6 +113,19 @@ def get_deeplink(id, headers) -> dict:
     try:
         deeplink = f"https://api-rest.tendios.com/api/tenders/{id}/sources"
         response = requests.get(deeplink, headers=headers, timeout=10).json()
+        if not response or not isinstance(response, list) or 'linkUrl' not in response[0]:
+            raise RuntimeError(f"Respuesta inesperada al obtener deeplink: {response}")
+
+        return response[0]['linkUrl']
+    except Exception as e:
+        print(f"Error obteniendo deeplink: {e}")
+        raise RuntimeError("Error obteniendo deeplink") from e
+
+async def async_get_deeplink(id, headers) -> dict:
+    try:
+        deeplink = f"https://api-rest.tendios.com/api/tenders/{id}/sources"
+        async with httpx.AsyncClient() as client:
+            response = (await client.get(deeplink, headers=headers, timeout=10)).json()
         if not response or not isinstance(response, list) or 'linkUrl' not in response[0]:
             raise RuntimeError(f"Respuesta inesperada al obtener deeplink: {response}")
 
