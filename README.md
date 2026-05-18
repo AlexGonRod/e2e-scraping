@@ -15,12 +15,13 @@ First this gets info directly from an URL using reverse ingeniering with custom 
 As said before if this first option fails then a scraper runs after over Playwright.
 In this second case, scraper simulates a "human being behaviour" setting the different options withing the website.
 
-If one of this two options is OK then an email is sent using MailTrap and a template.
-This template is filled with the data we get before so is always a custom mail.
+If one of this two options is OK then an email is sent using Jinja2 templates and SMTP.
+The template is filled with the scraped data so it's always a custom mail.
 
 
 ## Tools
 - [Playwright](https://playwright.dev/python/docs/library) as the scraper
-- [Mailtrap](https://github.com/mailtrap/mailtrap-python/tree/main) SDK
+- [Jinja2](https://jinja.palletsprojects.com/) for email templates
+- SMTP (any provider: Gmail, Brevo, SendGrid, etc.)
 
 
