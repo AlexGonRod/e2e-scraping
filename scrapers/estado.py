@@ -13,11 +13,11 @@ class GetFormData:
         return {
             "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:menu1MAQ1']": "ES",
             "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:cpvMultiple:codigoCpv']": [
-                15712000,
-                15713000,
-                35250000,
+                24600000,
+                38546000,
+                39500000,
+                44423000,
                 44619300,
-                45223600,
                 80512000,
             ],
             "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:estadoLici']": "PUB",
