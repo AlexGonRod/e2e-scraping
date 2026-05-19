@@ -23,6 +23,5 @@ async def main() -> None:
     print("=== mail sent to: " + mail_model._to_email + " ===")
 
 
-
 if __name__ == "__main__":
     asyncio.run(main())
