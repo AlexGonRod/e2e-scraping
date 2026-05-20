@@ -1,0 +1,32 @@
+name: Pylint
+
+on: 
+  schedule:
+    - cron: "0 0 * * *" # every day at midnight
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 
+      uses: actions/setup-python@v6
+      with:
+        python-version: "pyproject.toml"
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+      with:
+        uv-version: 8.11.7
+        enable-cache: true
+    
+    - name: Install dependencies
+      run: uv sync --locked --all-extras --dev
+      
+    - name: Run Application
+      run: |
+        uv run main.py
