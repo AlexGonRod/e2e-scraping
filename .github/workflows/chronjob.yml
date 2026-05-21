@@ -23,12 +23,25 @@ jobs:
     - name: Install uv
       uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
       with:
-        uv-version: 8.11.7
+        version: "0.11.7"
         enable-cache: true
     
     - name: Install dependencies
-      run: uv sync --locked --all-extras --dev
-      
-    - name: Run Application
+      run: uv sync --locked --dev
+
+    - name: Install Playwright browsers
       run: |
-        uv run main.py
+        uv run playwright install --with-deps chromium
+
+    - name: Run Application
+      env:
+        BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
+        SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        SMTP_HOST: ${{ vars.SMTP_HOST }}
+        SMTP_PORT: ${{ vars.SMTP_PORT }}
+        SMTP_USER: ${{ vars.SMTP_USER }}
+        FROM_EMAIL: ${{ vars.FROM_EMAIL }}
+        TO_EMAIL: ${{ vars.TO_EMAIL }}
+        URL: ${{ vars.URL }}
+        API_URL: ${{ vars.API_URL }}
+      run: uv run main.py
