@@ -33,12 +33,6 @@ jobs:
       run: |
         uv run playwright install --with-deps chromium
 
-    - name: Debug env vars
-      run: |
-        echo "API_URL=${{ vars.API_URL }}"
-        echo "URL=${{ vars.URL }}"
-        echo "SMTP_HOST=${{ vars.SMTP_HOST }}"
-
     - name: Run Application
       env:
         BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
