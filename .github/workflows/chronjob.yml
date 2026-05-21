@@ -33,15 +33,21 @@ jobs:
       run: |
         uv run playwright install --with-deps chromium
 
+    - name: Debug env vars
+      run: |
+        echo "API_URL=${{ vars.API_URL }}"
+        echo "URL=${{ vars.URL }}"
+        echo "SMTP_HOST=${{ vars.SMTP_HOST }}"
+
     - name: Run Application
       env:
         BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-        SMTP_HOST: ${{ vars.SMTP_HOST }}
-        SMTP_PORT: ${{ vars.SMTP_PORT }}
-        SMTP_USER: ${{ vars.SMTP_USER }}
-        FROM_EMAIL: ${{ vars.FROM_EMAIL }}
-        TO_EMAIL: ${{ vars.TO_EMAIL }}
-        URL: ${{ vars.URL }}
-        API_URL: ${{ vars.API_URL }}
+        SMTP_HOST: ${{ secrets.SMTP_HOST }}
+        SMTP_PORT: ${{ secrets.SMTP_PORT }}
+        SMTP_USER: ${{ secrets.SMTP_USER }}
+        FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        URL: ${{ secrets.URL }}
+        API_URL: ${{ secrets.API_URL }}
       run: uv run main.py
