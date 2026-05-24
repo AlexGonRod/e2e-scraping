@@ -2,9 +2,10 @@ import time
 import httpx
 import requests
 
+
 def fill_form(self, url, form_selectors):
     try:
-        self.page.goto(url, wait_until='networkidle')
+        self.page.goto(url, wait_until="networkidle")
 
         # Rellenar campos del formulario
         for selector, value in form_selectors.items():
@@ -12,9 +13,12 @@ def fill_form(self, url, form_selectors):
                 for cpv in value:
                     print(f"Rellenando {selector}: {cpv}")
                     self.page.fill(selector, str(cpv))
-                    self.page.eval_on_selector('.commandLink.marginLeft0punto4.nodecoration  ', "element => element.click()")
+                    self.page.eval_on_selector(
+                        ".commandLink.marginLeft0punto4.nodecoration  ",
+                        "element => element.click()",
+                    )
                     time.sleep(3)
-            elif value == 'click':
+            elif value == "click":
                 print(f"Haciendo click en: {selector}")
                 self.page.click(selector)
             else:
@@ -23,7 +27,7 @@ def fill_form(self, url, form_selectors):
                 time.sleep(3)
 
         # Esperar a que carguen los resultados
-        self.page.wait_for_load_state('networkidle')
+        self.page.wait_for_load_state("networkidle")
         time.sleep(5)
 
         return self.page.content()
@@ -31,6 +35,7 @@ def fill_form(self, url, form_selectors):
     except Exception as e:
         print(f"Error rellenando formulario: {e}")
         raise RuntimeError("Error rellenando formulario") from e
+
 
 def extract_data(self, selector, attribute=None):
     elements = self.page.query_selector_all(selector)
@@ -44,6 +49,7 @@ def extract_data(self, selector, attribute=None):
         data.append(value)
 
     return data
+
 
 def extract_table(self, table_selector="table"):
     """Extrae datos de una tabla HTML"""
@@ -78,7 +84,7 @@ def extract_table(self, table_selector="table"):
                     const firstCell = cells[0];
                     const expedient = firstCell.querySelector('span[id*="textoEnlace"]')?.innerText.trim() || "";
                     const name = firstCell.querySelector('div:nth-child(2)')?.innerText.trim() || "";
-                    const anchor = firstCell.querySelector('a');
+                    const anchor = firstCell.querySelector('div.cell-order > a');
                     const onClickText = anchor ? anchor.getAttribute('onclick') : "";
                     const idMatch = onClickText ? onClickText.match(/'idLicitacion','(\\d+)'/) : null;
                     const id = idMatch ? idMatch[1] : "";
@@ -109,27 +115,37 @@ def extract_table(self, table_selector="table"):
         print(f"Error extrayendo tabla: {e}")
         return []
 
+
 def get_deeplink(id, headers) -> dict:
     try:
         deeplink = f"https://api-rest.tendios.com/api/tenders/{id}/sources"
         response = requests.get(deeplink, headers=headers, timeout=10).json()
-        if not response or not isinstance(response, list) or 'linkUrl' not in response[0]:
+        if (
+            not response
+            or not isinstance(response, list)
+            or "linkUrl" not in response[0]
+        ):
             raise RuntimeError(f"Respuesta inesperada al obtener deeplink: {response}")
 
-        return response[0]['linkUrl']
+        return response[0]["linkUrl"]
     except Exception as e:
         print(f"Error obteniendo deeplink: {e}")
         raise RuntimeError("Error obteniendo deeplink") from e
+
 
 async def async_get_deeplink(id, headers) -> dict:
     try:
         deeplink = f"https://api-rest.tendios.com/api/tenders/{id}/sources"
         async with httpx.AsyncClient() as client:
             response = (await client.get(deeplink, headers=headers, timeout=10)).json()
-        if not response or not isinstance(response, list) or 'linkUrl' not in response[0]:
+        if (
+            not response
+            or not isinstance(response, list)
+            or "linkUrl" not in response[0]
+        ):
             raise RuntimeError(f"Respuesta inesperada al obtener deeplink: {response}")
 
-        return response[0]['linkUrl']
+        return response[0]["linkUrl"]
     except Exception as e:
         print(f"Error obteniendo deeplink: {e}")
         raise RuntimeError("Error obteniendo deeplink") from e
