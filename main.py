@@ -14,7 +14,7 @@ class SendMail:
 
 async def main() -> None:
     await fetchTendios()
-    await scrapePW()
+    # await scrapePW()
 
     print("=== Sending mail ===")
     mail_model = SmtpMailModel()
