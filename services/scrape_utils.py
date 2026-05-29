@@ -1,6 +1,7 @@
 import time
 import httpx
 import requests
+from lib.config import TendiosConfig
 
 
 def fill_form(self, url, form_selectors):
@@ -38,6 +39,9 @@ def fill_form(self, url, form_selectors):
 
 
 def extract_data(self, selector, attribute=None):
+    if not selector:
+        raise ValueError("El selector no puede estar vacío")
+    
     elements = self.page.query_selector_all(selector)
 
     data = []
@@ -118,7 +122,7 @@ def extract_table(self, table_selector="table"):
 
 def get_deeplink(id, headers) -> dict:
     try:
-        deeplink = f"https://api-rest.tendios.com/api/tenders/{id}/sources"
+        deeplink = f"{TendiosConfig.api_url}/api/tenders/{id}/sources"
         response = requests.get(deeplink, headers=headers, timeout=10).json()
         if (
             not response
@@ -135,7 +139,7 @@ def get_deeplink(id, headers) -> dict:
 
 async def async_get_deeplink(id, headers) -> dict:
     try:
-        deeplink = f"https://api-rest.tendios.com/api/tenders/{id}/sources"
+        deeplink = f"{TendiosConfig.api_url}/api/tenders/{id}/sources"
         async with httpx.AsyncClient() as client:
             response = (await client.get(deeplink, headers=headers, timeout=10)).json()
         if (
