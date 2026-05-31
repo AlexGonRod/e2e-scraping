@@ -2,7 +2,7 @@ name: Chron Job
 
 on: 
   schedule:
-   - cron: "0 0 * * *" # every day at midnight
+   - cron: "0 19 * * *" # every day at 7 PM
 
 jobs:
   uv:
