@@ -52,13 +52,16 @@ class SmtpMailModel:
         }
 
     def _load_data(self) -> tuple:
-        if not FILENAME_ESTADO.exists() or not FILENAME_TENDIOS.exists():
-            return [], []
-
-        with open(FILENAME_ESTADO, encoding="utf-8") as f:
-            estado_raw = json.load(f)
-        with open(FILENAME_TENDIOS, encoding="utf-8") as f:
-            tendios_raw = json.load(f)
+        estado_raw: list = []
+        tendios_raw: list = []
+        
+        if FILENAME_ESTADO.exists():
+            with open(FILENAME_ESTADO, encoding="utf-8") as f:
+                estado_raw = json.load(f)
+        
+        if FILENAME_TENDIOS.exists():
+            with open(FILENAME_TENDIOS, encoding="utf-8") as f:
+                tendios_raw = json.load(f)
 
         estado_raw_items = estado_raw if isinstance(estado_raw, list) else estado_raw.get("data", [])
         tendios_raw_items = tendios_raw if isinstance(tendios_raw, list) else tendios_raw.get("data", [])
