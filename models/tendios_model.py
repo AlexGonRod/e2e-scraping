@@ -2,12 +2,22 @@ import httpx
 from lib.config import TendiosConfig
 from services.scrape_utils import async_get_deeplink
 
+async def return_deeplink(data: list, headers: dict) -> list:
+
+    for item in data:
+        link = await async_get_deeplink(item["id"], headers= headers)
+        item["linkUrl"] = link
+    
+    return data
 
 class TendiosModel:
+    def __init__(self, client: httpx.AsyncClient | None = None):
+        self._client = client
+
     async def get(self) -> dict:
-        async with httpx.AsyncClient() as client:
+        async with self._client or httpx.AsyncClient() as c:
             response = (
-                await client.post(
+                await c.post(
                     f"{TendiosConfig.api_url}/api/searcher-tender",
                     headers=TendiosConfig.headers,
                     json=TendiosConfig.payload,
@@ -20,9 +30,6 @@ class TendiosModel:
                     response.get('status_code', 'Unknown')
                 }"
             )
-
-        data = response.get("data", [])
-        for item in data:
-            link = await async_get_deeplink(item["id"], headers=TendiosConfig.headers)
-            item["linkUrl"] = link
-        return data
+        
+        return await return_deeplink(response.get("data", []), TendiosConfig.headers)
+        
