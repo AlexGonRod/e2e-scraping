@@ -23,5 +23,3 @@ The template is filled with the scraped data so it's always a custom mail.
 - [Playwright](https://playwright.dev/python/docs/library) as the scraper
 - [Jinja2](https://jinja.palletsprojects.com/) for email templates
 - SMTP (any provider: Gmail, Brevo, SendGrid, etc.)
-
-

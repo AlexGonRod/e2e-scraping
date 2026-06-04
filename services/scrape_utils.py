@@ -1,6 +1,8 @@
 import time
+
 import httpx
 import requests
+
 from lib.config import TendiosConfig
 
 
@@ -41,7 +43,7 @@ def fill_form(self, url, form_selectors):
 def extract_data(self, selector, attribute=None):
     if not selector:
         raise ValueError("El selector no puede estar vacío")
-    
+
     elements = self.page.query_selector_all(selector)
 
     data = []
@@ -111,7 +113,7 @@ def extract_table(self, table_selector="table"):
                     }};
                 }}).filter(item => item !== null);
             }}
-        """)
+        """)  # noqa: E501
         final_json = {"data": table_data}
         return final_json
 

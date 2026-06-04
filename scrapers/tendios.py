@@ -1,5 +1,5 @@
-from models import TendiosModel
 from controllers import ScraperController
+from models import TendiosModel
 from services import save_data_to_json
 
 FILENAME_TENDIOS = "form_results_tendios.json"

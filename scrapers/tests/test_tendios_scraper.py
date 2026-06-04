@@ -1,7 +1,9 @@
+from unittest.mock import AsyncMock
+
 import pytest
-from unittest.mock import AsyncMock, MagicMock
-from scrapers.tendios import FetchDataTendios
+
 from controllers.scraper_controller import ScraperController
+from scrapers.tendios import FetchDataTendios
 
 filename = "Test.json"
 

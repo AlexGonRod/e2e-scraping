@@ -1,6 +1,7 @@
-from services.utils import save_data_to_json
 import json
 from pathlib import Path
+
+from services.utils import save_data_to_json
 
 
 class fakeTest():
@@ -25,4 +26,3 @@ def test_jason_does_not_exist(tmp_path):
     assert result == {"key": "value"}
     saved = json.loads(Path(model.filename).read_text())
     assert saved == {"key": "value"}
-

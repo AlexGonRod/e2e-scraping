@@ -1,6 +1,6 @@
 from .estado import (
-    ScraperModel,
     SaveDataToJSON,
+    ScraperModel,
     ScrapeWithForm,
     scrapePW,
 )

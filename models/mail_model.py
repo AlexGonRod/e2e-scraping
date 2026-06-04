@@ -1,5 +1,7 @@
-from typing import Protocol, Optional, Any
+from typing import Any, Optional, Protocol
+
 from pydantic import BaseModel
+
 
 class MailData(BaseModel):
     sender: str = ""

@@ -1,9 +1,12 @@
-import pytest
-from unittest.mock import patch, MagicMock
 from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+import pytest
 from playwright.sync_api import sync_playwright
+
 from controllers.playwright_controller import PlaywrightController
 from services.scrape_utils import get_deeplink
+
 
 @pytest.fixture
 def controller():
@@ -33,10 +36,10 @@ def test_extract_data_nonexistent_selector(controller):
 def test_get_deeplink():
     mock_response = MagicMock()
     mock_response.json.return_value = [{"linkUrl": "https://example.com/tender/123"}]
-    
+
     with patch("services.scrape_utils.requests.get", return_value = mock_response):
         result = get_deeplink("123", headers={"Authorization": "Bearer token"})
-    
+
     assert result == "https://example.com/tender/123"
 
 def test_get_deeplinkk_raise_exception():

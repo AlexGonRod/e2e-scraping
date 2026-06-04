@@ -1,7 +1,10 @@
-import pytest
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import httpx
-from unittest.mock import patch, MagicMock, AsyncMock
+import pytest
+
 from models.tendios_model import TendiosModel
+
 
 @pytest.mark.asyncio
 async def test_get_tendios__response():
@@ -16,7 +19,7 @@ async def test_get_tendios__response():
         mockDeepLink.return_value =  [{"id": 1, "linkUrl": "https://link.com"}]
         model = TendiosModel(client=mockClient)
         result = await model.get()
-        
+
     assert result == [{"id": 1, "linkUrl": "https://link.com"}]
 
 @pytest.mark.asyncio
@@ -31,4 +34,4 @@ async def test_raise_error():
 
     with pytest.raises(RuntimeError, match="Error en la llamada a la API: 400"):
         model = TendiosModel(client=mock_client)
-        result = await model.get()
+        await model.get()

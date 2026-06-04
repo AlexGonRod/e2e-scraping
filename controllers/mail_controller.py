@@ -1,5 +1,6 @@
 from models import MailModel
 
+
 class MailController():
     def __init__(self, model: MailModel) -> None:
         self.model = model

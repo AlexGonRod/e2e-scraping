@@ -147,7 +147,8 @@
                                                                                 <b>Organismo</b>
                                                                             </td>
                                                                             <td style="padding:4px 0;">{{
-                                                                                item.contractingOrganization.name | default('', true) }}
+                                                                                item.contractingOrganization.name |
+                                                                                default('', true) }}
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -188,7 +189,8 @@
                                                                                 <b>Fecha de publicación</b>
                                                                             </td>
                                                                             <td style="padding:4px 0;">{{
-                                                                                (item.expedientPublishedAt | default('', true))[:10] }}</td>
+                                                                                (item.expedientPublishedAt | default('',
+                                                                                true))[:10] }}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td
@@ -196,7 +198,8 @@
                                                                                 <b>Presupuesto</b>
                                                                             </td>
                                                                             <td style="padding:4px 0;">{{
-                                                                                "{:,.2f}".format(item.budgetNoTaxes | default(0, true)) }}
+                                                                                "{:,.2f}".format(item.budgetNoTaxes |
+                                                                                default(0, true)) }}
                                                                                 €</td>
                                                                         </tr>
                                                                     </tbody>
@@ -240,6 +243,7 @@
                                                                                                                 target="_blank"
                                                                                                                 style="display:inline-block;background:green;color:#ffffff;font-family:Ubuntu,Helvetica,Arial,sans-serif;font-size:12px;padding:8px 20px;text-decoration:none;border-radius:3px">Ver
                                                                                                                 original
+                                                                                                            </a>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>
@@ -262,7 +266,7 @@
                             </div>
                             {% endfor %}
                             <!-- Summary Text -->
-                             {% if data[0] is iterable %}
+                            {% if data[0] is iterable %}
                             <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:696px">
                                 <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
                                     style="background:#ffffff;background-color:#ffffff;width:100%">
@@ -300,7 +304,8 @@
                                                                                 <b>Organismo</b>
                                                                             </td>
                                                                             <td style="padding:4px 0;">{{
-                                                                                item.contractingOrganization.name | default('', true) }}
+                                                                                item.contractingOrganization.name |
+                                                                                default('', true) }}
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -341,7 +346,8 @@
                                                                                 <b>Fecha de publicación</b>
                                                                             </td>
                                                                             <td style="padding:4px 0;">{{
-                                                                                (item.expedientPublishedAt | default('', true))[:10] }}</td>
+                                                                                (item.expedientPublishedAt | default('',
+                                                                                true))[:10] }}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td
@@ -349,7 +355,8 @@
                                                                                 <b>Presupuesto</b>
                                                                             </td>
                                                                             <td style="padding:4px 0;">{{
-                                                                                "{:,.2f}".format(item.budgetNoTaxes | default(0, true)) }}
+                                                                                "{:,.2f}".format(item.budgetNoTaxes |
+                                                                                default(0, true)) }}
                                                                                 €</td>
                                                                         </tr>
                                                                     </tbody>
@@ -391,12 +398,13 @@
                                                                                                             style="border-radius:3px;background:green">
                                                                                                             <a href="{{ item.linkUrl | default('#', true) }}"
                                                                                                                 target="_blank"
-                                                                                                                style="display:inline-block;background:green;color:#ffffff;font-family:Ubuntu,Helvetica,Arial,sans-serif;font-size:12px;padding:8px 20px;text-decoration:none;border-radius:3px">Ver
-                                                                                                                original
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </td>
+                                                                                                                 style="display:inline-block;background:green;color:#ffffff;font-family:Ubuntu,Helvetica,Arial,sans-serif;font-size:12px;padding:8px 20px;text-decoration:none;border-radius:3px">Ver
+                                                                                                                 original
+                                                                                                             </a>
+                                                                                                         </td>
+                                                                                                     </tr>
+                                                                                                 </table>
+                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
                                                                                 </td>
@@ -423,4 +431,4 @@
     </div>
 </body>
 
-</html
+</html>

@@ -2,8 +2,8 @@ import json
 import os
 import smtplib
 import ssl
-from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from pathlib import Path
 
 import certifi
@@ -30,11 +30,11 @@ class SmtpMailModel:
 
     @staticmethod
     def _format_item(item) -> dict:
-        if not isinstance(item, dict) or isinstance(None, dict) or isinstance("string",dict) or isinstance(123, dict):
+        if not isinstance(item, dict):
             raise TypeError(f"Item must be a dict: got: {type(item).__name__}")
         if not item:
             raise ValueError("Item is not provided to be formatted")
-        
+
         org = item.get("contractingOrganization") or {}
         if isinstance(org, str):
             org = {"name": org}
@@ -50,24 +50,30 @@ class SmtpMailModel:
             },
             "numLots": item.get("numLots", 0),
             "expedientPublishedAt": item.get("expedientPublishedAt", item.get("publishedAt", "")),
-            "expedientSubmissionDeadline": item.get("expedientSubmissionDeadline", item.get("submissionDeadline", "")),
+            "expedientSubmissionDeadline": item.get(
+                "expedientSubmissionDeadline", item.get("submissionDeadline", "")
+            ),
             "linkUrl": item.get("linkUrl", item.get("sourceUrl", "")),
         }
 
     def _load_data(self) -> tuple:
         estado_raw: list = []
         tendios_raw: list = []
-        
+
         if FILENAME_ESTADO.exists():
             with open(FILENAME_ESTADO, encoding="utf-8") as f:
                 estado_raw = json.load(f)
-        
+
         if FILENAME_TENDIOS.exists():
             with open(FILENAME_TENDIOS, encoding="utf-8") as f:
                 tendios_raw = json.load(f)
 
-        estado_raw_items = estado_raw if isinstance(estado_raw, list) else estado_raw.get("data", [])
-        tendios_raw_items = tendios_raw if isinstance(tendios_raw, list) else tendios_raw.get("data", [])
+        estado_raw_items = (
+            estado_raw if isinstance(estado_raw, list) else estado_raw.get("data", [])
+        )
+        tendios_raw_items = (
+            tendios_raw if isinstance(tendios_raw, list) else tendios_raw.get("data", [])
+        )
 
         def _normalize(raw_items):
             if not isinstance(raw_items, list):

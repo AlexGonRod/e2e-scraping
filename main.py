@@ -1,7 +1,8 @@
 import asyncio
-from models import SmtpMailModel
+
 from controllers import MailController
-from scrapers import fetchTendios, scrapePW
+from models import SmtpMailModel
+from scrapers import fetchTendios
 
 
 class SendMail:
