@@ -1,5 +1,4 @@
 from .estado import (
-    GetFormData,
     ScraperModel,
     SaveDataToJSON,
     ScrapeWithForm,
@@ -8,7 +7,6 @@ from .estado import (
 from .tendios import FetchDataTendios, fetchTendios
 
 __all__ = [
-    "GetFormData",
     "ScraperModel",
     "SaveDataToJSON",
     "ScrapeWithForm",

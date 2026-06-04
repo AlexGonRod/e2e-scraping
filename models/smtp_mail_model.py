@@ -30,8 +30,11 @@ class SmtpMailModel:
 
     @staticmethod
     def _format_item(item) -> dict:
-        if not isinstance(item, dict):
-            return {}
+        if not isinstance(item, dict) or isinstance(None, dict) or isinstance("string",dict) or isinstance(123, dict):
+            raise TypeError(f"Item must be a dict: got: {type(item).__name__}")
+        if not item:
+            raise ValueError("Item is not provided to be formatted")
+        
         org = item.get("contractingOrganization") or {}
         if isinstance(org, str):
             org = {"name": org}

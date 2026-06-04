@@ -47,3 +47,17 @@ class TendiosConfig:
         "isOnlyWithinDeadline": True,
         "isMinorContract": None,
     }
+
+FormInputs: dict[str, str | list] = {
+    "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:menu1MAQ1']": "ES",
+    "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:cpvMultiple:codigoCpv']": [
+        24600000,
+        38546000,
+        39500000,
+        44423000,
+        44619300,
+        80512000,
+    ],
+    "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:estadoLici']": "PUB",
+    "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:button1']": "click",
+}
