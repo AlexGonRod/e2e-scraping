@@ -11,14 +11,16 @@ class TendiosConfig:
     url: str = os.getenv("URL") or ""
     api_url: str = os.getenv("API_URL") or ""
     status: List[str] = ["Publicada"]
-    # cpvs_codes: List[str] = ['15713000','15712000','35250000','44619300','45223600','80512000']
-    cpvs_codes: List[str] = [
-        "24600000",
-        "38546000",
-        "39500000",
+    # cpvsCodes: List[str] = ['15713000','15712000','35250000','44619300','45223600','80512000']
+    cpvsCodes: List[str] = [
+        # "24600000",
+        # "38546000",
+        # "39500000",
         "44423000",
         "44619300",
         "80512000",
+        "75241100",
+        "75241000",
     ]
 
     headers = {
@@ -43,7 +45,7 @@ class TendiosConfig:
         "pageSize": 10,
         "sort": "by-published-date",
         "isDescendent": True,
-        "cpvs": cpvs_codes,
+        "cpvs": cpvsCodes,
         "status": status,
         "isOnlyWithinDeadline": True,
         "isMinorContract": None,
@@ -51,14 +53,7 @@ class TendiosConfig:
 
 FormInputs: dict[str, str | list] = {
     "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:menu1MAQ1']": "ES",
-    "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:cpvMultiple:codigoCpv']": [
-        24600000,
-        38546000,
-        39500000,
-        44423000,
-        44619300,
-        80512000,
-    ],
+    "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:cpvMultiple:codigoCpv']":TendiosConfig.cpvsCodes,
     "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:estadoLici']": "PUB",
     "[id='viewns_Z7_AVEQAI930OBRD02JPMTPG21004_:form1:button1']": "click",
 }
