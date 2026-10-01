@@ -18,19 +18,19 @@ class TendiosModel:
 
     async def get(self) -> dict:
         async with self._client or httpx.AsyncClient() as c:
-            response = (
-                await c.post(
-                    f"{TendiosConfig.api_url}/api/searcher-tender",
-                    headers=TendiosConfig.headers,
-                    json=TendiosConfig.payload,
-                    timeout=10,
-                )
-            ).json()
+            resp = await c.post(
+                f"{TendiosConfig.api_url}/api/alerts/698085bc71d27258857c4d28/tenders",
+                headers=TendiosConfig.headers,
+                json=TendiosConfig.payload,
+                timeout=10,
+            )
+        print(f"Status: {resp.status_code}")
+        print(f"Headers: {dict(resp.headers)}")
+        response = resp.json()
+        print(f"Full response: {response}")
         if response.get("status_code", 200) != 200:
             raise RuntimeError(
-                f"Error en la llamada a la API: {
-                    response.get('status_code', 'Unknown')
-                }"
+                f"Error en la llamada a la API: {response.get('status_code', 'Unknown')}"
             )
-
+        print(f"Data: {response.get('data', [])}")
         return await return_deeplink(response.get("data", []), TendiosConfig.headers)
