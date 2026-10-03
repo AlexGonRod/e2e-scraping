@@ -2,7 +2,7 @@ import asyncio
 
 from controllers import MailController
 from models import SmtpMailModel
-from scrapers import fetchTendios
+from scrapers import scrapePW
 
 
 class SendMail:
@@ -14,8 +14,8 @@ class SendMail:
 
 
 async def main() -> None:
-    await fetchTendios()
-    # await scrapePW()
+    #await fetchTendios()
+    await scrapePW()
 
     print("=== Sending mail ===")
     mail_model = SmtpMailModel()
