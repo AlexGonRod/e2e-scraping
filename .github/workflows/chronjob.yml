@@ -1,6 +1,6 @@
 name: Chron Job
 
-on: 
+on:
   schedule:
    - cron: "0 19 * * *" # every day at 7 PM
 
@@ -8,11 +8,11 @@ jobs:
   uv:
     name: Run Application
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v6
 
-    - name: Set up Python 
+    - name: Set up Python
       uses: actions/setup-python@v6
       with:
         python-version-file: ".python-version"
@@ -22,13 +22,12 @@ jobs:
       with:
         version: "0.11.7"
         enable-cache: true
-    
+
     - name: Install dependencies
       run: uv sync --locked --dev
 
-    # - name: Install Playwright browsers
-    #   run: |
-    #     uv run playwright install --with-deps chromium
+    - name: Install Playwright browsers
+      run: uv run playwright install --with-deps chromium
 
     - name: Run Application
       env:
