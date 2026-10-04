@@ -7,10 +7,27 @@ repos:
       - id: check-json
       - id: check-case-conflict
       - id: detect-private-key
+      - id: double-quote-string-fixer
         language: python
         exclude: ^(form_results_.*\.json|[^/]+\.json)$
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: uv run pytest -v
+        language: system
+        types: [python]
+        pass_filename: false
+        always_run: true
 
   - repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs
     rev: v1.1.2
     hooks:
       - id: htmlhint
+
+  - repo: https://github.com/asottile/reorder-python-imports
+    rev: v3.17.0
+    hooks:
+      - id: reorder-python-imports
+        args: [--py310-plus, --add-import, 'from __future__ import annotations']
