@@ -4,18 +4,6 @@ on:
   schedule:
    - cron: "0 19 * * *" # every day at 7 PM
 
-on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Target Environment'
-        required: true
-        default: 'production'
-        type: choice
-        options:
-          - staging
-          - productions
-
 jobs:
   uv:
     name: Run Application
